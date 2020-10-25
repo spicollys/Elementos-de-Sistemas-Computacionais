@@ -1,0 +1,125 @@
+class GamePanel {
+	field GameSprite gameSprite;
+	field int defaultSpritePosition;	//base value for sprite position on Game Panel
+										//this value will be inscreased after each battle
+	field boolean roundResult;
+
+	constructor GamePanel new() {
+		let gameSprite = GameSprite.new(15);
+		let defaultSpritePosition = 787;
+		let roundResult = false;
+		do drawTopPanel();
+
+		do Output.moveCursor(20, 25);
+		do Output.printString("PRESS SPACE KEY TO START GAME");
+		return this;
+	}
+
+	method void dispose(){
+		do gameSprite.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method boolean getRoundResult(){
+		return roundResult;
+	}
+
+	method void clearGamePanel(){
+		do gameSprite.eraseAllSprites();
+		do gameSprite.dispose();
+		let gameSprite = GameSprite.new(15);
+		let defaultSpritePosition = 787;
+		let roundResult = false;
+		return;
+	}
+
+	method void startRound(int playerChoice, int enemyChoice){
+		if (playerChoice = 1) { do gameSprite.drawRock(defaultSpritePosition-2); }
+		if (playerChoice = 2) { do gameSprite.drawPaper(defaultSpritePosition-2); }
+		if (playerChoice = 3) { do gameSprite.drawScissor(defaultSpritePosition-2); }
+		if (playerChoice = 4) { do gameSprite.drawLizard(defaultSpritePosition-2); }
+		if (playerChoice = 5) { do gameSprite.drawSpock(defaultSpritePosition-2); }
+		
+		do gameSprite.drawVersus(defaultSpritePosition); //draw the X sprite
+		
+		if (enemyChoice = 1) { do gameSprite.drawRock(defaultSpritePosition+2); }
+		if (enemyChoice = 2) { do gameSprite.drawPaper(defaultSpritePosition+2); }
+		if (enemyChoice = 3) { do gameSprite.drawScissor(defaultSpritePosition+2); }
+		if (enemyChoice = 4) { do gameSprite.drawLizard(defaultSpritePosition+2); }
+		if (enemyChoice = 5) { do gameSprite.drawSpock(defaultSpritePosition+2); }
+
+		let defaultSpritePosition = defaultSpritePosition + 1024; //jump the line
+
+		do writeRoundResult(playerChoice, enemyChoice); 
+		return;
+	}
+
+	method void drawTopPanel(){
+		do Output.moveCursor(1, 30);
+		do Output.printString("PLAYER");
+		do Output.moveCursor(1, 42);
+		do Output.printString("ENEMY");
+		return;
+	}
+
+	method void clearBottomTextLine(int line){
+		do Output.moveCursor(line, 20);
+		do Output.printString("                                       ");
+		return;
+	}
+
+	method void writeCounter(){
+		//writes a 3 second counter before each battle;
+		do clearBottomTextLine(18);
+		do Output.moveCursor(18, 28);
+		do Output.printString("3...");
+		do Sys.wait(1000);
+		do Output.printString("2...");
+		do Sys.wait(1000);
+		do Output.printString("1...");
+		do Sys.wait(1000);
+		do Output.printString("PRESS A KEY!");
+		return;
+	}
+	method void writeRoundResult(int player, int enemy){
+		//write the result on bottom text panel after battle ends
+		let roundResult = false;
+		do Sys.wait(1000);
+		do clearBottomTextLine(20);
+		do Output.moveCursor(20, 25);
+
+		if (player = enemy) { do Output.printString("DRAW!"); }
+		//rock
+		if ((player = 1) & (enemy = 2)) { do Output.printString("PAPER COVER ROCK. LOSE!"); }
+		if ((player = 1) & (enemy = 3)) { do Output.printString("ROCK CRUSHES SCISSORS. WIN!"); let roundResult = true; }
+		if ((player = 1) & (enemy = 4)) { do Output.printString("ROCK CRUSHES LIZARD. WIN!"); let roundResult = true; }
+		if ((player = 1) & (enemy = 5)) { do Output.printString("SPOCK VAPORIZES ROCK. LOSE!"); }
+		//paper
+		if ((player = 2) & (enemy = 1)) { do Output.printString("PAPER COVER ROCK. WIN!"); let roundResult = true; }
+		if ((player = 2) & (enemy = 3)) { do Output.printString("SCISSORS CUTS PAPER. LOSE!"); }
+		if ((player = 2) & (enemy = 4)) { do Output.printString("LIZARD EATS PAPER. LOSE!"); }
+		if ((player = 2) & (enemy = 5)) { do Output.printString("PAPER DISPROVES SPOCK. WIN!"); let roundResult = true; }
+		//scissors
+		if ((player = 3) & (enemy = 1)) { do Output.printString("ROCK CRUSHES SCISSORS. LOSE!"); }
+		if ((player = 3) & (enemy = 2)) { do Output.printString("SCISSORS CUTS PAPER. WIN!"); let roundResult = true; }
+		if ((player = 3) & (enemy = 4)) { do Output.printString("SCISSORS DECAPITATES LIZARD. WIN!"); let roundResult = true; }
+		if ((player = 3) & (enemy = 5)) { do Output.printString("SPOCK SMASH SCISSORS. LOSE!"); }
+		//lizard
+		if ((player = 4) & (enemy = 1)) { do Output.printString("ROCK CRUSHES LIZARD. LOSE!"); }
+		if ((player = 4) & (enemy = 2)) { do Output.printString("LIZARD EATS PAPER. WIN!"); let roundResult = true; }
+		if ((player = 4) & (enemy = 3)) { do Output.printString("SCISSORS DECAPITATES LIZARD. LOSE!"); }
+		if ((player = 4) & (enemy = 5)) { do Output.printString("LIZARD POISONS SPOCK. WIN!"); let roundResult = true; }
+		//spock
+		if ((player = 5) & (enemy = 1)){ do Output.printString("SPOCK VAPORIZES ROCK. WIN!"); let roundResult = true; }
+		if ((player = 5) & (enemy = 2)){ do Output.printString("PAPER DISPROVES SPOCK. LOSE!"); }
+		if ((player = 5) & (enemy = 3)){ do Output.printString("SPOCK SMASH SCISSORS. WIN!"); let roundResult = true; }
+		if ((player = 5) & (enemy = 4)){ do Output.printString("LIZARD POISONS SPOCK. LOSE!"); }
+
+		do Sys.wait(3000);
+		do clearBottomTextLine(20);
+		do Output.moveCursor(20, 25);
+		do Output.printString("PRESS SPACE KEY TO NEXT ROUND");
+		return;
+	}
+}

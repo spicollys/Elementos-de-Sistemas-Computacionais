@@ -1,0 +1,75 @@
+class Game{
+	field InstructionPanel instruction; //loads the instruction panel on screen
+	field GamePanel gamePanel; 	//load the game panel on screen;
+								//the player current command 
+	constructor Game new() {
+		let instruction = InstructionPanel.new();
+		let gamePanel = GamePanel.new();
+		return this;
+	}
+
+	method void dispose() {
+		do instruction.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void run() {
+		var char key;
+		var int keyValue;
+		var String keyChar;
+		var boolean exit;
+		var boolean validKey;
+		var boolean result;
+		var int randNum;
+		var int round;
+
+		let exit = false;
+		let round = 0;
+
+		while (~exit) {
+			//waits for a key to be pressed
+			//if none of them were a command
+			//the loop starts again 
+			let key = 0;
+			while (key = 0) { let key = Keyboard.keyPressed(); }
+
+			//if key equals 32 (space key) round start
+			if (key = 32) {
+				 //pseudo-random number
+				do gamePanel.writeCounter();
+				let key = 0;
+				let validKey = false;
+
+				while (key = 0) { let key = Keyboard.keyPressed(); }
+
+				//"randomize" process
+				let keyChar = String.new(1);
+				let keyChar = keyChar.appendChar(key); //the char is picked, turned into string
+				let keyValue = keyChar.intValue(); //get an int value based on player choice
+				do Random.setSeed(15053 + (keyValue * 3) - (round * 7));
+				let randNum = Random.randRange(4) + 1;
+
+				if (key = 53) { let exit = true; }						//5
+				if (key = 48) { do gamePanel.startRound(1, randNum); let validKey = true; }	//0
+				if (key = 49) { do gamePanel.startRound(2, randNum); let validKey = true; }	//1
+				if (key = 50) { do gamePanel.startRound(3, randNum); let validKey = true; }	//2
+				if (key = 51) { do gamePanel.startRound(4, randNum); let validKey = true; }	//3
+				if (key = 52) { do gamePanel.startRound(5, randNum); let validKey = true; }	//4
+
+				if (validKey) { 
+					let result = gamePanel.getRoundResult();
+
+					if (result) { do instruction.increaseWinStreak(); }
+					else { do instruction.resetWinStreak(); } 
+					let round = round + 1;
+				} 
+				do Random.setSeed(15053 + keyValue - round);
+
+				//each 5 rows the panel is cleared
+				if (round = 5){ do gamePanel.clearGamePanel(); let round = 0; } 
+			}
+		}
+		return;
+	}
+}

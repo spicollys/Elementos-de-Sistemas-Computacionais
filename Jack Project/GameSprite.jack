@@ -1,0 +1,183 @@
+class GameSprite{
+	field Array spriteLocation;
+	field int i;
+
+	constructor GameSprite new(int numberOfSprites){
+		let spriteLocation = Array.new(numberOfSprites);
+		let i = 0; // current sprite index
+		return this;
+	}
+
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void eraseSprite(int location) {
+		do Memory.poke(location+0, 0);
+		do Memory.poke(location+32, 0);
+		do Memory.poke(location+64, 0);
+		do Memory.poke(location+96, 0);
+		do Memory.poke(location+128, 0);
+		do Memory.poke(location+160, 0);
+		do Memory.poke(location+192, 0);
+		do Memory.poke(location+224, 0);
+		do Memory.poke(location+256, 0);
+		do Memory.poke(location+288, 0);
+		do Memory.poke(location+320, 0);
+		do Memory.poke(location+352, 0);
+		do Memory.poke(location+384, 0);
+		do Memory.poke(location+416, 0);
+		do Memory.poke(location+448, 0);
+		do Memory.poke(location+480, 0);
+		return;
+	}
+
+	method void eraseAllSprites(){
+		var int j;
+		let j = 0;
+		while (j < i) {
+			do eraseSprite(spriteLocation[j]);
+			let j = j +1;
+		}
+		do spriteLocation.dispose();
+		return;
+	}
+
+	//lizard
+	method void drawLizard(int location) {
+		let spriteLocation[i] = 16384+location;
+		do Memory.poke(spriteLocation[i]+0, -2048);
+		do Memory.poke(spriteLocation[i]+32, -27200);
+		do Memory.poke(spriteLocation[i]+64, -31424);
+		do Memory.poke(spriteLocation[i]+96, -15552);
+		do Memory.poke(spriteLocation[i]+128, -32640);
+		do Memory.poke(spriteLocation[i]+160, 28780);
+		do Memory.poke(spriteLocation[i]+192, 4138);
+		do Memory.poke(spriteLocation[i]+224, 11834);
+		do Memory.poke(spriteLocation[i]+256, 10518);
+		do Memory.poke(spriteLocation[i]+288, 6404);
+		do Memory.poke(spriteLocation[i]+320, 776);
+		do Memory.poke(spriteLocation[i]+352, 1132);
+		do Memory.poke(spriteLocation[i]+384, 930);
+		do Memory.poke(spriteLocation[i]+416, 58);
+		do Memory.poke(spriteLocation[i]+448, 9);
+		do Memory.poke(spriteLocation[i]+480, 7);
+		let i = i + 1;
+		return;
+	}
+
+	//spock
+	method void drawSpock(int location) {
+		let spriteLocation[i] = 16384+location;
+		do Memory.poke(spriteLocation[i]+0, 0);
+		do Memory.poke(spriteLocation[i]+32, 4080);
+		do Memory.poke(spriteLocation[i]+64, 8184);
+		do Memory.poke(spriteLocation[i]+96, 16380);
+		do Memory.poke(spriteLocation[i]+128, -16387);
+		do Memory.poke(spriteLocation[i]+160, -16387);
+		do Memory.poke(spriteLocation[i]+192, -8185);
+		do Memory.poke(spriteLocation[i]+224, -28663);
+		do Memory.poke(spriteLocation[i]+256, -24967);
+		do Memory.poke(spriteLocation[i]+288, -31135);
+		do Memory.poke(spriteLocation[i]+320, -32767);
+		do Memory.poke(spriteLocation[i]+352, 24582);
+		do Memory.poke(spriteLocation[i]+384, 14316);
+		do Memory.poke(spriteLocation[i]+416, 4104);
+		do Memory.poke(spriteLocation[i]+448, 6168);
+		do Memory.poke(spriteLocation[i]+480, 2016);
+		let i = i + 1;
+		return;
+	}
+
+	//paper
+	method void drawPaper(int location) {
+		let spriteLocation[i] = 16384+location;
+		do Memory.poke(spriteLocation[i]+0, 32766);
+		do Memory.poke(spriteLocation[i]+32, 16386);
+		do Memory.poke(spriteLocation[i]+64, 24570);
+		do Memory.poke(spriteLocation[i]+96, 16386);
+		do Memory.poke(spriteLocation[i]+128, 24570);
+		do Memory.poke(spriteLocation[i]+160, 16386);
+		do Memory.poke(spriteLocation[i]+192, 24570);
+		do Memory.poke(spriteLocation[i]+224, 16386);
+		do Memory.poke(spriteLocation[i]+256, 24570);
+		do Memory.poke(spriteLocation[i]+288, 16386);
+		do Memory.poke(spriteLocation[i]+320, 24570);
+		do Memory.poke(spriteLocation[i]+352, 16386);
+		do Memory.poke(spriteLocation[i]+384, 24570);
+		do Memory.poke(spriteLocation[i]+416, 16386);
+		do Memory.poke(spriteLocation[i]+448, 16386);
+		do Memory.poke(spriteLocation[i]+480, 32766);
+		let i = i + 1;
+		return;
+	}
+
+	//scissors
+	method void drawScissor(int location) {
+		let spriteLocation[i] = 16384+location;
+		do Memory.poke(spriteLocation[i]+0, 4104);
+		do Memory.poke(spriteLocation[i]+32, 10260);
+		do Memory.poke(spriteLocation[i]+64, 10260);
+		do Memory.poke(spriteLocation[i]+96, 10260);
+		do Memory.poke(spriteLocation[i]+128, 10260);
+		do Memory.poke(spriteLocation[i]+160, 10260);
+		do Memory.poke(spriteLocation[i]+192, 9252);
+		do Memory.poke(spriteLocation[i]+224, 4680);
+		do Memory.poke(spriteLocation[i]+256, 4680);
+		do Memory.poke(spriteLocation[i]+288, 2448);
+		do Memory.poke(spriteLocation[i]+320, 2016);
+		do Memory.poke(spriteLocation[i]+352, 7800);
+		do Memory.poke(spriteLocation[i]+384, 8772);
+		do Memory.poke(spriteLocation[i]+416, 8772);
+		do Memory.poke(spriteLocation[i]+448, 8772);
+		do Memory.poke(spriteLocation[i]+480, 7224);
+		let i = i + 1;
+		return;
+	}
+
+	//rock
+	method void drawRock(int location) {
+		let spriteLocation[i] = 16384+location;
+		do Memory.poke(spriteLocation[i]+0, 0);
+		do Memory.poke(spriteLocation[i]+32, 0);
+		do Memory.poke(spriteLocation[i]+64, 0);
+		do Memory.poke(spriteLocation[i]+96, 0);
+		do Memory.poke(spriteLocation[i]+128, 8184);
+		do Memory.poke(spriteLocation[i]+160, 28686);
+		do Memory.poke(spriteLocation[i]+192, -16381);
+		do Memory.poke(spriteLocation[i]+224, -32767);
+		do Memory.poke(spriteLocation[i]+256, -3983);
+		do Memory.poke(spriteLocation[i]+288, -24639);
+		do Memory.poke(spriteLocation[i]+320, -32767);
+		do Memory.poke(spriteLocation[i]+352, -4039);
+		do Memory.poke(spriteLocation[i]+384, -24607);
+		do Memory.poke(spriteLocation[i]+416, -16381);
+		do Memory.poke(spriteLocation[i]+448, 24582);
+		do Memory.poke(spriteLocation[i]+480, 16380);
+		let i = i + 1;
+		return;
+	}
+
+	method void drawVersus(int location) {
+		let spriteLocation[i] = 16384+location;
+		do Memory.poke(spriteLocation[i]+0, 0);
+		do Memory.poke(spriteLocation[i]+32, 0);
+		do Memory.poke(spriteLocation[i]+64, 0);
+		do Memory.poke(spriteLocation[i]+96, -2017);
+		do Memory.poke(spriteLocation[i]+128, -961);
+		do Memory.poke(spriteLocation[i]+160, 32382);
+		do Memory.poke(spriteLocation[i]+192, 16380);
+		do Memory.poke(spriteLocation[i]+224, 8184);
+		do Memory.poke(spriteLocation[i]+256, 4080);
+		do Memory.poke(spriteLocation[i]+288, 2016);
+		do Memory.poke(spriteLocation[i]+320, 4080);
+		do Memory.poke(spriteLocation[i]+352, 8184);
+		do Memory.poke(spriteLocation[i]+384, 16380);
+		do Memory.poke(spriteLocation[i]+416, 32382);
+		do Memory.poke(spriteLocation[i]+448, -961);
+		do Memory.poke(spriteLocation[i]+480, -2017);
+		let i = i + 1;
+		return;
+	}
+}
