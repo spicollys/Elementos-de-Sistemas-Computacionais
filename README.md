@@ -1,4 +1,4 @@
-# Elementos-de-Sistemas-Computacionais
+# Elementos de Sistemas Computacionais (antiga Infraestrutura de Hardware)
 Repositório destinado às entregas da disciplina em questão.
 
 #### Projeto Jack
